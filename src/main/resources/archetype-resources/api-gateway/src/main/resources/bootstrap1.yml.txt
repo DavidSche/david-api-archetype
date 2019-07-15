@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    consul:
+      host: 192.168.5.114
+      port: 8500
+      config:
+        enabled: true
+        prefix: configuration
+        defaultContext: shared
+        format: PROPERTIES
+      discovery:
+        prefer-ip-address: true
+    gateway:
+      routes:
+      - id: baeldung_route
+        uri: http://www.baeldung.com
+        predicates:
+        - Path=/baeldung
+  banner:
+    location: classpath:banner.txt  
+         
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+server:
+  port: 9090

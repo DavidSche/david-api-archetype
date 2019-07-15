@@ -1,0 +1,44 @@
+spring:
+  redis:
+    host: 192.168.5.114
+    port: 6379
+  application:
+    name: ${artifactId}
+
+server:
+  port: 9090
+
+---
+# 单元测试配置
+test:
+  hostport: localhost:9090
+  #  hostport: localhost:5000
+  uri: http://${test.hostport}
+
+# 日志信息配置
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
+    org.springframework.http.server.reactive: debug
+    org.springframework.web.reactive: debug
+    reactor.ipc.netty: debug
+    ${groupId}: debug
+
+# 启用Spring 管理端口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  #  server:
+  #    port: 10111
+  #    servlet:
+  #      context-path: /
+  #    ssl:
+  #      enabled: false
+  endpoint:
+    health:
+      show-details: always
+
+# Hystrix 服务处理的配置信息
+hystrix.command.fallbackcmd.execution.isolation.thread.timeoutInMilliseconds: 8000

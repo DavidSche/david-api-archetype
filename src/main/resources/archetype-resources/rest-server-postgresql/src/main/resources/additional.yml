@@ -1,0 +1,51 @@
+property1: additional
+property2: additional
+property3: additional
+property4: additional
+
+metadata:
+  test: "test"
+  carriers:
+    - displayName: "easyJet"
+      iataCodes: ["U2"]
+      contact:
+        website: "www.easyjet.com"
+        phoneNumber: "+44 330 365 5454"
+      termAndConditions:
+        label: "terms_conditions_generic_provider"
+        localizedUrls:
+          - fr: "http://www.easyjet.com/fr/terms-and-conditions"
+          - es: "http://www.easyjet.com/es/terms-and-conditions"
+          - cn: "http://www.easyjet.com/cn/terms-and-conditions"
+          - ca: "http://www.easyjet.com/ca/terms-and-conditions"
+          - cs: "http://www.easyjet.com/cs/terms-and-conditions"
+          - da: "http://www.easyjet.com/da/terms-and-conditions"
+          - de: "http://www.easyjet.com/de/terms-and-conditions"
+          - el: "http://www.easyjet.com/el/terms-and-conditions"
+          - en: "http://www.easyjet.com/en/terms-and-conditions"
+          - it: "http://www.easyjet.com/it/terms-and-conditions"
+          - hu: "http://www.easyjet.com/hu/terms-and-conditions"
+          - nl: "http://www.easyjet.com/nl/terms-and-conditions"
+          - pl: "http://www.easyjet.com/pl/terms-and-conditions"
+          - pt: "http://www.easyjet.com/pt/terms-and-conditions"
+          - ru: "http://www.easyjet.com/ru/terms-and-conditions"
+          - default: "http://www.easyjet.com/en/terms-and-conditions"
+      passengerAgeCategories:
+        ADULT:
+          start:
+            unit: Years
+            value: 16
+        CHILD:
+          start:
+            unit: Years
+            value: 2
+          end:
+            unit: Years
+            value: 16
+        INFANT:
+          start:
+            unit: Days
+            value: 14
+          end:
+            unit: Years
+            value: 2

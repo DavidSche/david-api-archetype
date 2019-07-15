@@ -1,0 +1,58 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  #  server:
+  #    port: 10111
+  #    servlet:
+  #      context-path: /
+  #    ssl:
+  #      enabled: false
+  endpoint:
+    health:
+      show-details: always
+
+# 日志信息配置
+logging:
+  level:
+    ${groupId}: debug
+
+# 测试使用的配置信息
+
+metadata:
+  test: "test"
+  carriers:
+    - displayName: "easyJet"
+      iataCodes: ["U2"]
+      contact:
+        website: "www.easyjet.com"
+        phoneNumber: "+44 330 365 5454"
+      termAndConditions:
+        label: "terms_conditions_generic_provider"
+        localizedUrls:
+          - fr: "http://www.easyjet.com/fr/terms-and-conditions"
+          - cn: "http://www.easyjet.com/cn/terms-and-conditions"
+          - ca: "http://www.easyjet.com/ca/terms-and-conditions"
+          - de: "http://www.easyjet.com/de/terms-and-conditions"
+          - en: "http://www.easyjet.com/en/terms-and-conditions"
+          - default: "http://www.easyjet.com/en/terms-and-conditions"
+      passengerAgeCategories:
+        ADULT:
+          start:
+            unit: Years
+            value: 16
+        CHILD:
+          start:
+            unit: Years
+            value: 2
+          end:
+            unit: Years
+            value: 16
+        INFANT:
+          start:
+            unit: Days
+            value: 14
+          end:
+            unit: Years
+            value: 2

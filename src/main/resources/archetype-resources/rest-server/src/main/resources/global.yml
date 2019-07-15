@@ -1,0 +1,14 @@
+property1: global
+property2: global
+property3: global
+
+persons-list.persons:
+  - firstName: John
+    lastName: Smith
+    age: 30
+  - firstName: Tom
+    lastName: Walker
+    age: 40
+  - firstName: Kate
+    lastName: Hamilton
+    age: 50

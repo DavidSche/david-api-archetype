@@ -1,0 +1,150 @@
+spring:
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        ip-address: 192.168.230.113
+        port: 9090
+        healthCheckPath: /gateway-health-check
+#        healthCheckInterval: 15s
+        instanceId: ${spring.cloud.consul.discovery.service-name}-${spring.profiles.active}-${spring.cloud.consul.discovery.ip-address}-${random.value}
+        service-name: ${spring.application.name}
+
+    # ============================
+    gateway:
+    #  全局cors的配置  >= 2.0.1 
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+      locator:
+        enabled: true
+      default-filters:
+      - AddResponseHeader=X-Response-Default-Foo, Default-Bar
+      - RemoveRequestHeader=Origin
+      - Elapsed=true
+      - Logging=true
+# fail with "java.lang.IllegalArgumentException: No Configuration found for route service_customer"
+# Spring Cloud Gateway 内置的RequestRateLimiterGatewayFilterFactory
+      - name: RequestRateLimiter
+        args:
+        # 用于限流的键的解析器的 Bean 对象名字（有些绕，看代码吧）。它使用 SpEL 表达式根据#{@beanName}从 Spring 容器中获取 Bean 对象。默认情况下，使用PrincipalNameKeyResolver，以请求认证的java.security.Principal作为限流键
+          key-resolver: "#{@remoteAddrKeyResolver}"
+        # 令牌桶每秒填充平均速率。
+          redis-rate-limiter.replenishRate: 1    
+        # 令牌桶容量。
+          redis-rate-limiter.burstCapacity: 5
+# 路由熔断 Hystrix 服务降级的能力，即如果服务调用出现了异常，则执行指定的 fallback 方法。Spring Cloud Gateway 也融合了 Hystrix，为我们提供路由层面服务降级 详情参考HystrixGatewayFilterFactory
+      - name: Hystrix
+        args:
+          name: fallbackcmd
+          fallbackUri: forward:/fallback
+      routes:
+      # =====================================
+      - id: route_retry
+        uri: lb://user
+        predicates:
+        - Path=/test/**
+        filters:
+        - Retry
+      # =====================================
+      - id: service_to_consul
+        uri: lb://user
+        order: 8000
+        predicates:
+        - Path=/test2/**
+        filters:
+        - StripPrefix=1
+      # =====================================
+      - id: netty_route
+        uri: http://baidu.com
+        order: 8000
+        predicates:
+        - Path=/test100/**
+        filters:
+        - name: RequestRateLimiter
+          args:
+            key-resolver: "#{@remoteAddrKeyResolver}"
+            redis-rate-limiter.replenishRate: 2
+            redis-rate-limiter.burstCapacity: 1
+        - StripPrefix=1
+      # =====================================
+      - id: remoteaddr_route
+        uri: http://example.org
+        predicates:
+        - RemoteAddr=192.168.1.1/32
+      # =====================================
+      - id: websocket_test
+        uri: ws://localhost:9000
+        order: 9000
+        predicates:
+        - Path=/engine.io
+      # =====================================
+      - id: default_path_to_httpbin
+        uri: localhost:9090
+        order: 10000
+        predicates:
+        - Path=/**
+        filters:
+        - AddRequestParameter=foo, bar
+      # ===================================== 
+      - id: hytstrix_route
+        uri: lb://user
+        order: 6000
+        predicates:
+        - Path=/user/**
+        filters:
+        - StripPrefix=1
+        - name: Hystrix
+          args:
+            name: fallbackcmd
+            fallbackUri: forward:/fallbackcontroller?a=123
+      # =====================================
+      - id: weight_route1
+        uri: http://blueskykong.com
+        order: 6000
+        predicates:
+        - Weight=group3, 1
+        - Path=/weight/**
+        filters:
+        - StripPrefix=2
+      # =====================================
+      - id: weight_route2
+        uri: http://baidu.com
+        order: 6000
+        predicates:
+        - Path=/weight/**
+        - Weight=group3, 4
+        filters:
+        - StripPrefix=1
+      # =====================================
+      - id: request_header
+        uri: http://baidu.com
+        order: 6000
+        predicates:
+        - Path=/header/**
+        - Header=X-Next-Url, .+
+        filters:
+        - RequestHeaderToRequestUri=X-Next-Url
+      # ===================================== 
+      # 调用服务路由例子
+      - id: api-service
+        uri: lb://api-service
+        predicates:
+        - Path=/employee/**
+        filters:
+        - RewritePath=/employee/(?<path>.*), /$\{path}
+      - id: department-service
+        uri: lb://department-service
+        predicates:
+        - Path=/department/**
+        filters:
+        - RewritePath=/department/(?<path>.*), /$\{path}
+      - id: organization-service
+        uri: lb://organization-service
+        predicates:
+        - Path=/organization/**
+        filters:
+        - RewritePath=/organization/(?<path>.*), /$\{path}

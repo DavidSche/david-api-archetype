@@ -1,0 +1,84 @@
+spring:
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      # config:
+      #   failFast: false    #是否忽略注册失败停止运行应用
+      discovery:
+        prefer-ip-address: true
+        # deregister: true    #是否关闭失效自动注销服务
+        #        ip-address: 192.168.230.113
+        #        port: ${server.port}
+        healthCheckPath: /gateway-health-check
+        healthCheckCriticalTimeout: 30m  #60s      最大失效时间，超时注销服务
+        #        healthCheckInterval: 15s
+        instanceId: ${spring.cloud.consul.discovery.service-name}-${spring.profiles.active}-${spring.cloud.consul.discovery.ip-address}-${random.value}
+        service-name: ${spring.application.name}
+    # ============================  spring.cloud.consul.config.failFast=false
+    gateway:
+     #gateway data type:redis/consul
+      datasource: redis 
+      #  全局cors的配置  >= 2.0.1
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+#            allowedHeaders: "*"
+      locator:
+        enabled: true
+      default-filters:
+        - AddResponseHeader=X-Response-Default-Foo, Default-Bar
+        - RemoveRequestHeader=Origin
+        - Elapsed=true
+        - Logging=false
+        # fail with "java.lang.IllegalArgumentException: No Configuration found for route service_customer"
+        # Spring Cloud Gateway 内置的RequestRateLimiterGatewayFilterFactory
+        - name: RequestRateLimiter
+          args:
+            # 用于限流的键的解析器的 Bean 对象名字（有些绕，看代码吧）。它使用 SpEL 表达式根据#{@beanName}从 Spring 容器中获取 Bean 对象。默认情况下，使用PrincipalNameKeyResolver，以请求认证的java.security.Principal作为限流键
+            key-resolver: "#{@remoteAddrKeyResolver}"
+            # 令牌桶每秒填充平均速率。
+            redis-rate-limiter.replenishRate: 5
+            # 令牌桶容量。
+            redis-rate-limiter.burstCapacity: 1000
+        # 路由熔断 Hystrix 服务降级的能力，即如果服务调用出现了异常，则执行指定的 fallback 方法。Spring Cloud Gateway 也融合了 Hystrix，为我们提供路由层面服务降级 详情参考HystrixGatewayFilterFactory
+        - name: Hystrix
+          args:
+            name: fallbackcmd
+            fallbackUri: forward:/fallback
+      routes:
+        # =====================================
+        #        - id: route_retry
+        #          uri: lb://api-gateway-server
+        #          predicates:
+        #            - Path=/test/**
+        #          filters:
+        #            - Retry
+        # =====================================
+        - id: service_to_consul
+          uri: lb://api-gateway-server
+          order: 8000
+          predicates:
+            - Path=/test2/**
+          filters:
+            - StripPrefix=1
+        # =====================================
+        # 调用服务路由例子
+        - id: employee
+          uri: lb://api-service
+          predicates:
+            - Path=/employee/**
+          filters:
+            - RewritePath=/employee/(?<path>.*), /$\{path}
+
+#spring:
+#  cloud:
+#    gateway:
+#      globalcors:
+#        corsConfigurations:
+#          '[/**]':
+#            allowedOrigins: "*"
+#            allowedMethods:
+#              - GET

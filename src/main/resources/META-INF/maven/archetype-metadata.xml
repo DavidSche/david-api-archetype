@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor name="basic">
+
+	<requiredProperties>
+		<requiredProperty key="archetypeVersion">
+			<defaultValue>RELEASE</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="groupId">
+			<defaultValue>com.david.api</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="artifactId" />
+		<requiredProperty key="version">
+			<defaultValue>0.1-SNAPSHOT</defaultValue>
+		</requiredProperty>
+	</requiredProperties>
+
+	<fileSets>
+		<fileSet filtered="true" packaged="true">
+			<directory>src/main/java</directory>
+			<includes>
+				<include>**/*.java</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true" packaged="true">
+			<directory>src/main/kotlin</directory>
+			<includes>
+				<include>**/*.kt</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true" packaged="false">
+			<directory>src/main/resources</directory>
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true" packaged="true">
+			<directory>src/test/java</directory>
+			<includes>
+				<include>**/*.java</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true" packaged="false">
+			<directory>src/test/resources</directory>
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true" encoding="UTF-8">
+			<directory></directory>
+			<includes>
+				<include>Dockerfile</include>
+				<include>README.md</include>
+				<!-- <include>Jenkinsfile</include> -->
+				<include>docker-compose.yml</include>
+			</includes>
+		</fileSet>
+		<!--  -->
+		<fileSet filtered="false" encoding="UTF-8">
+			<directory></directory>
+			<includes>
+				<include>mvnw.cmd</include>
+				<include>.gitignore</include>
+				<include>mvnw</include>
+				<!-- <include>.travis.yml</include> -->
+			</includes>
+		</fileSet>
+		<!-- sub-module -->
+		<!-- <fileSet filtered="true" packaged="false">
+			<directory>sub-module</directory>
+			<includes>
+				<include>pom.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true" packaged="false">
+			<directory>sub-module/src/main/resource</directory>
+			<includes>
+				<include>**/*.yml</include>
+				<include>**/*.properties</include>
+				<include>**/*.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true" packaged="true">
+			<directory>sub-module/src/main/java</directory>
+			<includes>
+				<include>**/*.java</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true" packaged="true">
+			<directory>sub-module/src/main/kotlin</directory>
+			<includes>
+				<include>**/*.kt</include>
+			</includes>
+		</fileSet> -->
+
+	</fileSets>
+
+	<!-- <modules>
+        <module name="sub-module"></module>
+    </modules> -->
+	<modules>
+		<module id="${rootArtifactId}-common" dir="common" name="common">
+			<fileSets>
+				<!-- <fileSet filtered="true" encoding="UTF-8" packaged="false">
+					<directory>src/main/resource</directory>
+					<includes>
+						<include>**/*.yml</include>
+						<include>**/*.xml</include>
+						<include>**/*.properties</include>
+					</includes>
+				</fileSet> -->
+				<fileSet filtered="true" packaged="false">
+					<directory>src/main/resources</directory>
+					<includes>
+						<include>**/*</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" packaged="true">
+					<directory>src/main/java</directory>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" packaged="true">
+					<directory>src/main/kotlin</directory>
+					<includes>
+						<include>**/*.kt</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" packaged="true">
+					<directory>src/test/java</directory>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" packaged="false">
+					<directory>src/test/resources</directory>
+					<includes>
+						<include>**/*</include>
+					</includes>
+				</fileSet>
+			</fileSets>
+			<!-- <modules>
+			<module id="${rootArtifactId}" dir="__rootArtifactId__-parent" name="parent">
+			<fileSets>
+			</fileSets>
+			</module>
+		</modules> -->
+		</module>
+
+		<module id="${rootArtifactId}-rest-server" dir="rest-server" name="${rootArtifactId}-rest-server">
+			<fileSets>
+				<fileSet filtered="true" packaged="false">
+					<directory>src/main/resources</directory>
+					<includes>
+						<include>**/*.yml</include>
+						<include>**/*.xml</include>
+						<include>**/*.properties</include>
+						<include>**/*.txt</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" packaged="true">
+					<directory>src/main/java</directory>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" packaged="true">
+					<directory>src/main/kotlin</directory>
+					<includes>
+						<include>**/*.kt</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" packaged="true">
+					<directory>src/test/java</directory>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" packaged="false">
+					<directory>src/test/resources</directory>
+					<includes>
+						<include>**/*</include>
+					</includes>
+				</fileSet>
+			</fileSets>
+			<!-- <modules>
+			<module id="${rootArtifactId}" dir="__rootArtifactId__-parent" name="parent">
+			<fileSets>
+			</fileSets>
+			</module>
+		</modules> -->
+		</module>
+
+		<module id="${rootArtifactId}-api-gateway" dir="api-gateway" name="${rootArtifactId}-api-gateway">
+			<fileSets>
+				<fileSet filtered="true" packaged="false">
+					<directory>src/main/resources</directory>
+					<includes>
+						<include>**/*.yml</include>
+						<include>**/*.xml</include>
+						<include>**/*.properties</include>
+						<include>**/*.txt</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" packaged="true">
+					<directory>src/main/java</directory>
+					<includes>
+						<include>**/*.java</include>
+						<include>**/*.mf</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" packaged="true">
+					<directory>src/main/kotlin</directory>
+					<includes>
+						<include>**/*.kt</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" packaged="true">
+					<directory>src/test/java</directory>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" packaged="false">
+					<directory>src/test/resources</directory>
+					<includes>
+						<include>**/*</include>
+					</includes>
+				</fileSet>
+			</fileSets>
+			<!-- <modules>
+			<module id="${rootArtifactId}" dir="__rootArtifactId__-parent" name="parent">
+			<fileSets>
+			</fileSets>
+			</module>
+		</modules> -->
+		</module>
+
+	</modules>
+
+</archetype-descriptor>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--<include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+    <!--<logger name="guru.springframework.controllers" level="WARN" additivity="false">-->
+    <!--<appender-ref ref="CONSOLE"/>-->
+    <!--<appender-ref ref="FILE"/>-->
+    <!--</logger>-->
+    <!--<logger name="guru.springframework.helpers" level="WARN" additivity="false">-->
+    <!--<appender-ref ref="CONSOLE"/>-->
+    <!--<appender-ref ref="FILE"/>-->
+    <!--</logger>-->
+    <!---->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread, %X{X-B3-TraceId:-},%X{X-B3-SpanId:-}] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/logFile.log</file>
+        <encoder>
+            <pattern>[%-5level] %d{dd-MM-yyyy hh:mm:ss.SSS a} [%thread] %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--<appender name="STASH"-->
+    <!--class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
+    <!--<destination>192.168.99.100:5000</destination>-->
+
+    <!--<encoder-->
+    <!--class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">-->
+    <!--<providers>-->
+    <!--<mdc /> &lt;!&ndash; MDC variables on the Thread will be written as JSON fields &ndash;&gt;-->
+    <!--<context /> &lt;!&ndash;Outputs entries from logback's context &ndash;&gt;-->
+    <!--<version /> &lt;!&ndash; Logstash json format version, the @version field in the output &ndash;&gt;-->
+    <!--<logLevel />-->
+    <!--<loggerName />-->
+
+    <!--<pattern>-->
+    <!--<pattern>-->
+    <!--{-->
+    <!--"serviceName": "customer-service"-->
+    <!--}-->
+    <!--</pattern>-->
+    <!--</pattern>-->
+
+    <!--<threadName />-->
+    <!--<message />-->
+
+    <!--<logstashMarkers />-->
+    <!--<arguments />-->
+
+    <!--<stackTrace />-->
+    <!--</providers>-->
+    <!--</encoder>-->
+    <!--</appender>-->
+
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+        <!--<appender-ref ref="STASH" />-->
+    </root>
+
+    <!--<logger name="com.javadeveloperzone.slf4j.controller" level="ALL" additivity="true">-->
+    <!--<appender-ref ref="FILE"/>-->
+    <!--</logger>-->
+
+</configuration>

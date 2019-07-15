@@ -1,0 +1,151 @@
+[
+    {
+        "route_id": "httpbin",
+        "route_object": {
+            "predicate": "org.springframework.cloud.gateway.support.ServerWebExchangeUtils$$Lambda$600/1018631082@20340b27",
+            "filters": [
+                "OrderedGatewayFilter{delegate=org.springframework.cloud.gateway.filter.factory.AddResponseHeaderGatewayFilterFactory$$Lambda$603/1309596507@5aae7e54, order=0}"
+            ]
+        },
+        "order": 0
+    },
+    {
+        "route_id": "test-kotlin",
+        "route_object": {
+            "predicate": "org.springframework.cloud.gateway.handler.AsyncPredicate$$Lambda$610/1776527358@7f1eb9e4",
+            "filters": [
+                "OrderedGatewayFilter{delegate=org.springframework.cloud.gateway.filter.factory.AddResponseHeaderGatewayFilterFactory$$Lambda$603/1309596507@64021691, order=0}"
+            ]
+        },
+        "order": 0
+    },
+    {
+        "route_id": "api-service",
+        "route_definition": {
+            "id": "api-service",
+            "predicates": [
+                {
+                    "name": "Path",
+                    "args": {
+                        "_genkey_0": "/api-service/**"
+                    }
+                }
+            ],
+            "filters": [
+                {
+                    "name": "RewritePath",
+                    "args": {
+                        "_genkey_1": "/\\{path}",
+                        "_genkey_0": "/api-service/(?<path>.*)"
+                    }
+                }
+            ],
+            "uri": "lb://api-service",
+            "order": 0
+        },
+        "order": 0
+    },
+    {
+        "route_id": "consul",
+        "route_definition": {
+            "id": "consul",
+            "predicates": [
+                {
+                    "name": "Path",
+                    "args": {
+                        "_genkey_0": "/consul/**"
+                    }
+                }
+            ],
+            "filters": [
+                {
+                    "name": "RewritePath",
+                    "args": {
+                        "_genkey_1": "/\\{path}",
+                        "_genkey_0": "/consul/(?<path>.*)"
+                    }
+                }
+            ],
+            "uri": "lb://consul",
+            "order": 0
+        },
+        "order": 0
+    },
+    {
+        "route_id": "api-gateway-server",
+        "route_definition": {
+            "id": "api-gateway-server",
+            "predicates": [
+                {
+                    "name": "Path",
+                    "args": {
+                        "_genkey_0": "/api-gateway-server/**"
+                    }
+                }
+            ],
+            "filters": [
+                {
+                    "name": "RewritePath",
+                    "args": {
+                        "_genkey_1": "/\\{path}",
+                        "_genkey_0": "/api-gateway-server/(?<path>.*)"
+                    }
+                }
+            ],
+            "uri": "lb://api-gateway-server",
+            "order": 0
+        },
+        "order": 0
+    },
+    {
+        "route_id": "employee",
+        "route_definition": {
+            "id": "employee",
+            "predicates": [
+                {
+                    "name": "Path",
+                    "args": {
+                        "_genkey_0": "/employee/**"
+                    }
+                }
+            ],
+            "filters": [
+                {
+                    "name": "RewritePath",
+                    "args": {
+                        "_genkey_0": "/employee/(?<path>.*)",
+                        "_genkey_1": "/$\\{path}"
+                    }
+                }
+            ],
+            "uri": "lb://api-service",
+            "order": 0
+        },
+        "order": 0
+    },
+    {
+        "route_id": "service_to_consul",
+        "route_definition": {
+            "id": "service_to_consul",
+            "predicates": [
+                {
+                    "name": "Path",
+                    "args": {
+                        "_genkey_0": "/test2/**"
+                    }
+                }
+            ],
+            "filters": [
+                {
+                    "name": "StripPrefix",
+                    "args": {
+                        "_genkey_0": "1"
+                    }
+                }
+            ],
+            "uri": "lb://api-gateway-server",
+            "order": 8000
+        },
+        "order": 8000
+    }
+]

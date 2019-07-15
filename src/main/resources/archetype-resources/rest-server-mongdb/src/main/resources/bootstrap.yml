@@ -1,0 +1,54 @@
+server:
+  port: 8091
+  compression:
+    enabled: true
+
+spring:
+  application:
+    name: ${artifactId} 
+    index: ${spring.application.name}
+  # datasource:
+  #   driverClassName: com.mysql.jdbc.Driver
+  #   url: jdbc:mysql://localhost/university_course 
+  #   username: root
+  #   password: root
+  # jpa:
+  #   database: mysql
+  #   hibernate.ddl-auto: update
+  #   generate-ddl: true
+  #   show-sql: true
+  #  自定义应用banner 内容
+  banner:
+    location: classpath:banner.txt
+
+  #  服务注册及发现相关配置信息--默认注册的服务名==spring.application.name
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      config:
+        enabled: true
+        prefix: configuration
+        defaultContext: shared
+        format: YAML
+      discovery:
+        prefer-ip-address: true
+#        ip-address: 192.168.230.113
+        instanceId: ${spring.application.name}:${random.value}
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 15s
+
+#  mongodb setting
+  data:
+    mongodb:
+      uri: mongodb://192.168.5.115:27017/carrierManagement
+
+# Info
+info:
+  application:
+    groupId:  '@project.groupId@'
+    artifactId: '@project.artifactId@'
+    version: '@project.version@'
+    environment: ${spring.profiles.active}
+    apiVersion: v1
+    port: ${server.port}    
