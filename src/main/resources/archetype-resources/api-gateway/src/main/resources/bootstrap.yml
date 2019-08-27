@@ -1,7 +1,7 @@
 spring:
   cloud:
     consul:
-      host: 127.0.0.1
+      host: 192.168.9.74
       port: 8500
       # config:
       #   failFast: false    #是否忽略注册失败停止运行应用

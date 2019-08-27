@@ -1,26 +1,29 @@
+package ${groupId}.gateway.dto;
 
-package ${groupId}.gateway.entity;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * The starter of the Gateway Server
+ * 路由断言模型
  *
  * @Author:David.che
+ *
  * @version: ${version}
+ *
  * @Date 2019-03-01
+ *
  * @category ${groupId}:${artifactId}
+ *
  */
+
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class GatewayFilterDefinition {
+public class GatewayPredicateDefinition {
+
+    //断言对应的Name
     private String name;
+    //配置的断言规则
     private Map<String, String> args = new LinkedHashMap<>();
 
 }

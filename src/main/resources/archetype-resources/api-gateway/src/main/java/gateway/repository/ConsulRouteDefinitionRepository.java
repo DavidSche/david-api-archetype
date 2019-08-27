@@ -1,4 +1,4 @@
-package ${groupId}.gateway.service;
+package ${groupId}.gateway.repository;
 
 import com.ecwid.consul.v1.ConsulClient;
 import com.ecwid.consul.v1.QueryParams;
@@ -43,7 +43,7 @@ import ${groupId}.gateway.util.RouteUtil;
         matchIfMissing = true
 )
 @DependsOn("consulClient")
-public class DynamicRouteDefinitionRepository implements RouteDefinitionRepository {
+public class ConsulRouteDefinitionRepository implements RouteDefinitionRepository {
 
     private final Map<String, RouteDefinition> routes = synchronizedMap(new LinkedHashMap<String, RouteDefinition>());
 
@@ -71,7 +71,7 @@ public class DynamicRouteDefinitionRepository implements RouteDefinitionReposito
      * #        filters:
      * #        - StripPrefix=1
      */
-    public DynamicRouteDefinitionRepository() {
+    public ConsulRouteDefinitionRepository() {
 
 //        initRoute();
 

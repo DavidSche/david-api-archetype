@@ -1,4 +1,4 @@
-package ${groupId}.gateway.service;
+package ${groupId}.gateway.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

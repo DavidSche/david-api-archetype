@@ -1,6 +1,6 @@
 package ${groupId}.gateway.controller;
 
-import ${groupId}.gateway.entity.GatewayFilterDefinition;
+import ${groupId}.gateway.dto.GatewayFilterDefinition;
 import ${groupId}.gateway.entity.User;
 import ${groupId}.gateway.service.GatewayDynamicRouteService;
 import ${groupId}.gateway.util.JsonUtils;

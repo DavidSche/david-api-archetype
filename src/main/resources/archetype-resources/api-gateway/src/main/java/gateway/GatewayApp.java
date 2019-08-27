@@ -1,6 +1,7 @@
 package ${groupId}.gateway;
 
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -40,7 +41,8 @@ import ${groupId}.common.gracefullshutdown.GracefulshutdownSpringApplication;
 @Slf4j
 @RestController
 @EnableDiscoveryClient
-@SpringBootApplication(scanBasePackages = "${groupId}.gateway")
+@MapperScan({"${groupId}.gateway.repository"})
+@SpringBootApplication(scanBasePackages = "com.david.gateway")
 public class GatewayApp {
 	
 	public static void main(String[] args) {
@@ -70,5 +72,15 @@ public class GatewayApp {
 	public Mono<ResponseEntity<Map>> myCustomCheck() {
 		return Mono.just(ResponseEntity.ok(JsonUtils.buildRetBody(0, "success", "Gateway healh check OK!")));
 	}
-	
+
+	@Bean
+	public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
+		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+		redisTemplate.setKeySerializer(new StringRedisSerializer());
+		redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+		redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
+		redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());
+		redisTemplate.setConnectionFactory(factory);
+		return redisTemplate;
+	}
 }
