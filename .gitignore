@@ -130,3 +130,8 @@ venv.bak/
 *.project
 *.prefs
 *.classpath
+#idea project 
+.idea/
+./settings
+*.iml
+

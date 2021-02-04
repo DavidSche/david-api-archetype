@@ -73,14 +73,14 @@ public class GatewayApp {
 		return Mono.just(ResponseEntity.ok(JsonUtils.buildRetBody(0, "success", "Gateway healh check OK!")));
 	}
 
-	@Bean
-	public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
-		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-		redisTemplate.setKeySerializer(new StringRedisSerializer());
-		redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-		redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
-		redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());
-		redisTemplate.setConnectionFactory(factory);
-		return redisTemplate;
-	}
+	// @Bean
+	// public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
+	// 	RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+	// 	redisTemplate.setKeySerializer(new StringRedisSerializer());
+	// 	redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+	// 	redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
+	// 	redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());
+	// 	redisTemplate.setConnectionFactory(factory);
+	// 	return redisTemplate;
+	// }
 }
